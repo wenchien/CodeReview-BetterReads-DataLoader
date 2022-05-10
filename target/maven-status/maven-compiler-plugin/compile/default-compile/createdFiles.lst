@@ -1,0 +1,8 @@
+io\jdevelop\betterreadsdataloader\BetterReadsDataLoaderApplication.class
+connect\DataStaxAstraProperties.class
+io\jdevelop\gson\typeadapters\PostProcessable$PostProcessingEnabler.class
+io\jdevelop\gson\typeadapters\PostProcessable$PostProcessingEnabler$1.class
+io\jdevelop\gson\typeadapters\PostProcessable.class
+io\jdevelop\repository\BookRepository.class
+io\jdevelop\gson\classdeserializer\LocalDateDeserializer.class
+io\jdevelop\repository\AuthorRepository.class
