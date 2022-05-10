@@ -15,52 +15,51 @@ public class LoadData {
   // All Author / Book creation logics
 }
 ```
+[See the full LoadData class](src/main/java/io/jdevelop/betterreadsdataloader/LoadData.java)
 
 ## Changes - JSONObject -> GSON
 As mentioned in the previous section, after moving everything out of the main class, I modify the use of JSONObjects.
 Instead of JSONOjbect, I resort to GSON and added a custom `PostProcessable.PostProcessingEnabler` class that implements `TypeAdapterFactory`.
-```Java
-public interface PostProcessable {
-    
-    public void gsonPostProcess();
 
-    public boolean isPostProcessOk();
+[See the custom TypeAdapter here](src/main/java/io/jdevelop/gson/typeadapters/PostProcessable.java)
 
-    @Slf4j
-    class PostProcessingEnabler implements TypeAdapterFactory {
-
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
-            
-            return new TypeAdapter<T>() {
-
-                @Override
-                public void write(JsonWriter out, T value) throws IOException {
-                    delegate.write(out, value);
-                    
-                }
-
-                @Override
-                public T read(JsonReader in) throws IOException {
-                    T obj = delegate.read(in);
-                    log.debug("JsonReader: {}", in.toString());
-                    log.debug("Delegate.read(in): {}", obj.toString());
-                    if (obj instanceof PostProcessable) {
-                        ((PostProcessable) obj).gsonPostProcess();
-                    }
-                    return obj;
-                }
-                
-            };
-        }
-        
-    }
-}
-
-```
-And then have the `Author` and `Book` beans implement `PostProcessable` interface and hide all the data processing in each Bean's `gsonPostProcess()`. Therefore you only need to call methods like the following snippet: 
+And then have the `Author` and `Book` beans implement `PostProcessable` interface and hide all the data processing in each Bean's `gsonPostProcess()` and `isPostProcessOk()`. Therefore you only need to call methods like the following snippet: 
 ```Java
 Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(new PostProcessable.PostProcessingEnabler()).create();
 Author gsonAuthor = gson.fromJson(jsonString, Author.class);
+```
+
+## Changes - System.out.println -> SLF4J
+In my honest opinion, there's no reason to use System.out.println() directly in code. Quoting from Baeldung page:
+```
+Unlike the messages in the sample snippets above, most useful log messages require appending Strings. This entails allocating memory, serializing objects, concatenating Strings, and potentially cleaning up the garbage later.
+
+Consider the following message:
+
+log.debug("Current count is " + count);
+We incur the cost of building the message whether the Logger logs the message or not.
+
+Logback offers an alternative with its parameterized messages:
+
+log.debug("Current count is {}", count);
+The braces {} will accept any Object and uses its toString() method to build a message only after verifying that the log message is required.
+```
+
+## Changes - Relying on source action -> Lombok
+I like lombok. It saves me a lot of time
+
+## Changes - Cleaner stream
+I honestly like to follow the saying `One stream, one purpose / operation` (from my boss). 
+So I rewrote the stream section that finds the ID from Cassandra db.
+```Java
+private void populateBookAuthorNames(Gson gson, Book gsonBook) {
+		Optional<Author> authors = gsonBook.getAuthorIds().stream()
+                                                            .map(id -> authorRepository
+                                                            .findById(id))
+                                                            .findFirst()
+                                                            .orElse(Optional.empty());
+                                                            
+		authors.ifPresentOrElse(author -> gsonBook.getAuthorNames().add(author.getName()), 
+                                () -> {gsonBook.getAuthorNames().add("Unknown Author");});
+	}
 ```
