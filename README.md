@@ -76,3 +76,6 @@ private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("
         return LocalDate.parse(json.getAsString(), formatter.withLocale(Locale.ENGLISH));
     }
 ```
+
+## Changes - Moved `Book` and `Author` to package 'io.jdevelop.DTO' and `BookRepository` and `AuthorRepository` to `io.jdevelop.repository`
+package standards man, package standards
