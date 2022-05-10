@@ -30,7 +30,7 @@ Author gsonAuthor = gson.fromJson(jsonString, Author.class);
 ```
 
 ## Changes - System.out.println -> SLF4J
-In my honest opinion, there's no reason to use System.out.println() directly in code. Quoting from Baeldung page:
+In my honest opinion, there's no reason to use System.out.println() directly in code. Quoting from Baeldung page `https://www.baeldung.com/logback`:
 ```
 Unlike the messages in the sample snippets above, most useful log messages require appending Strings. This entails allocating memory, serializing objects, concatenating Strings, and potentially cleaning up the garbage later.
 
