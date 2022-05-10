@@ -64,7 +64,7 @@ private void populateBookAuthorNames(Gson gson, Book gsonBook) {
 	}
 ```
 
-## Changes Added new LocalDateDeserializer
+## Changes - Added new LocalDateDeserializer
 GSON requires this when serializing / deserializing `LocalDateTime`, `LocalDate`. This is something new I learned.
 ```Java
 private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
