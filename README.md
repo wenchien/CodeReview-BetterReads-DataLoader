@@ -61,6 +61,6 @@ public interface PostProcessable {
 ```
 And then have the `Author` and `Book` beans implement `PostProcessable` interface and hide all the data processing in each Bean's `gsonPostProcess()`. Therefore you only need to call methods like the following snippet: 
 ```Java
-    Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(new PostProcessable.PostProcessingEnabler()).create();
-		Author gsonAuthor = gson.fromJson(jsonString, Author.class);
+Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(new PostProcessable.PostProcessingEnabler()).create();
+Author gsonAuthor = gson.fromJson(jsonString, Author.class);
 ```
