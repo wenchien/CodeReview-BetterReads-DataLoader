@@ -8,7 +8,7 @@ This is also a documentation for what I've learned.
 
 ## Changes - Move logics out of main class
 In the video, a lot of the parsing, retrievals are written under the main class with @PostConstruct.
-In my opinion, this is never justified. Instead I moved a lot of the logics to a new class:
+In my opinion, this is barely justified. Instead I moved a lot of the logics to a new class:
 ```Java
 @Component
 @Slf4j
