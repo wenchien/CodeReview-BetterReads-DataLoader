@@ -4,6 +4,7 @@ I was following a pretty interesting code-along series by Java Brains on Youtube
 However, I feel like some things can be modified to abide by the SOLID principle. 
 This repository is dedicated to my thoughts on what can be changed and why.
 I will be making continuous modification as I go through the project.
+This is also a documentation for what I've learned.
 
 ## Changes - Move logics out of main class
 In the video, a lot of the parsing, retrievals are written under the main class with @PostConstruct.
