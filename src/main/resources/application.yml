@@ -1,26 +1,40 @@
-spring:
-  data:
-       cassandra:
-          keyspace-name: main
-          username: bdmQwJZzOhEDpeKJBqFQObHX
-          password: 3e1JZzrZcTkv+L5WKo6+cG4zswAjNZZ2OtZZUG1SuJ5YqcUQyH,++e_H4ppG0hk0n.cA89ZurCBhi_6QXyT991JYqpYx2fKdg0snufYIoGNYQKmb29NQyN4PAhvusD9E
-          schema-action: CREATE_IF_NOT_EXISTS
-          request:
-            timeout: 10s
-          connect:
-            timeout: 10s
-            init-query-timeout: 10s
-
+#spring:
+#  data:
+#       cassandra:
+#          keyspace-name: main
+#          username: bdmQwJZzOhEDpeKJBqFQObHX
+#          password: 3e1JZzrZcTkv+L5WKo6+cG4zswAjNZZ2OtZZUG1SuJ5YqcUQyH,++e_H4ppG0hk0n.cA89ZurCBhi_6QXyT991JYqpYx2fKdg0snufYIoGNYQKmb29NQyN4PAhvusD9E
+#          schema-action: CREATE_IF_NOT_EXISTS
+#          request:
+#            timeout: 10s
+#          connect:
+#            timeout: 10s
+#            init-query-timeout: 10s
+#
 datadump:
     location:
         authors: src\\test\\test-authors.txt
         works: src\\test\\test-works.txt
 
-datastax.astra:
-    secure-connect-bundle: secure-connect.zip
+#datastax.astra:
+#    secure-connect-bundle: secure-connect.zip
+#
+#astra.db:
+#    id: dd75fdbd-acd9-44b1-b03b-a20ac04f5b44
+#    region: ap-southeast-1
+#    keyspace: main
+#    application.token: AstraCS:bdmQwJZzOhEDpeKJBqFQObHX:44966788c5fa83da15dad752b1c56deb4ea755202adff87578c4046f462a7753
 
-astra.db:
-    id: dd75fdbd-acd9-44b1-b03b-a20ac04f5b44
-    region: ap-southeast-1
-    keyspace: main
-    application.token: AstraCS:bdmQwJZzOhEDpeKJBqFQObHX:44966788c5fa83da15dad752b1c56deb4ea755202adff87578c4046f462a7753
+spring:
+      data:
+            cassandra:
+                  keyspace-name: main
+                  contact-points: 127.0.0.1
+                  port: 9042
+                  local-datacenter: datacenter1
+                  schema-action: CREATE_IF_NOT_EXISTS
+            request:
+                  timeout: 10s
+            connect:
+                  timeout: 10s
+                  init-query-timeout: 10s

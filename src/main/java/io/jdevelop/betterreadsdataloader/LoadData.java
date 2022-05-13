@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Component;
 
 import io.jdevelop.DTO.Author;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
+@EnableCassandraRepositories({"io.jdevelop.repository"})
 public class LoadData {
 
     @Autowired
@@ -45,8 +47,14 @@ public class LoadData {
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
         // similar to @PostConstruct
-        initAuthors();
-        initWorks();
+		try {
+			//initAuthors();
+			//Thread.sleep(3000);
+        	initWorks();
+		} catch(Exception ex) {
+			log.error(ex.getMessage(), ex);
+		}
+
     }
 
 	private void initAuthors(){
@@ -57,9 +65,10 @@ public class LoadData {
 				try {
 					Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapterFactory(new PostProcessable.PostProcessingEnabler()).create();
 					Author gsonAuthor = gson.fromJson(jsonString, Author.class);
-					log.info("gsonAuthor: {}", gsonAuthor);
+					authorRepository.save(gsonAuthor);
 
-					//authorRepository.save(gsonAuthor);
+					log.debug("gsonAuthor: {}", gsonAuthor);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -79,9 +88,9 @@ public class LoadData {
 				Book gsonBook = gson.fromJson(jsonString, Book.class);
 
                 // Because this step requires db connection, we moved it out of the PostProcessable's gsonPostProcess() method
-				// populateBookAuthorNames(gson, gsonBook);
-                log.info("gsonBook: {}", gsonBook);
-				//bookRepository.save(gsonBook);
+				populateBookAuthorNames(gson, gsonBook);
+				bookRepository.save(gsonBook);
+
 			});
 		} catch(IOException ex) {
 			log.error(ex.getMessage(), ex);
@@ -94,8 +103,9 @@ public class LoadData {
                                                             .findById(id))
                                                             .findFirst()
                                                             .orElse(Optional.empty());
-                                                            
-		authors.ifPresentOrElse(author -> gsonBook.getAuthorNames().add(author.getName()), 
+
+		authors.ifPresentOrElse(author -> gsonBook.getAuthorNames().add(author.getName()),
                                 () -> {gsonBook.getAuthorNames().add("Unknown Author");});
+		// log.info("gsonBook: {}", gsonBook);
 	}
 }

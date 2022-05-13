@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-@Table
+@Table(value = "author_by_id")
 @Slf4j
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public class Author implements Serializable, PostProcessable {
     // column name, ordinal (if multiple key exists, the order of this key)
     // parititioned by id and since id is unique
     @Id
-    @PrimaryKeyColumn(name = "author_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     @SerializedName(value = "key")
     private String id;
 
@@ -50,22 +50,22 @@ public class Author implements Serializable, PostProcessable {
         // when we deserialized the json string from the given data
         // the format is : "key" : "/authors/OL3980739A" where the last section is the author's id
         // we need to extract the last section.
-        // To avoid boilerplate code, confusion and abide by the loosely coupled rule and for reusability. 
+        // To avoid boilerplate code, confusion and abide by the loosely coupled rule and for reusability.
         // We create a custom inner class PostProcessingEnabler
         // and PostProcessable interface to automatically delegate post processing class.
-        
+
         if (isPostProcessOk()) {
             log.info("{} gson post process successfully completed", this.getClass().getName());
         } else {
             log.info("{} gson post process failed", this.getClass().getName());
         }
-        
+
     }
 
     public boolean isPostProcessOk() {
 
         this.id = this.id.replace("/authors/", "");
-
+        this.setName(this.getName().trim());
         return !Strings.isNullOrEmpty(this.id) ? true : false;
     }
 
