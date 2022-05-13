@@ -77,5 +77,16 @@ private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("
     }
 ```
 
-## Changes - Moved `Book` and `Author` to package 'io.jdevelop.DTO' and `BookRepository` and `AuthorRepository` to `io.jdevelop.repository`
+## Changes - Moved `Book` and `Author` to package `io.jdevelop.DTO` and `BookRepository` and `AuthorRepository` to `io.jdevelop.repository`
 package standards man, package standards
+
+## Changes - Added .cql
+For bookkeeping 
+
+## Changes changed CassandraColumn type from `Name.LIST` to `Name.SET`
+According to [DataStax Documentation](https://docs.datastax.com/en/cql-oss/3.x/cql/cql_reference/cql_data_types_c.html?utm_source=google&utm_medium=search_pd&utm_campaign=dsa-rtg&utm_content=hp&gclid=Cj0KCQjwg_iTBhDrARIsAD3Ib5i67IkuGUmOVcLJECRHrQhar9j2OeY-oawzCa_pPKLrJmOb-hterikaAvknEALw_wcB), the description for LIST is of the following:
+```
+CAUTION:
+Lists have limitations and specific performance considerations. Use a frozen list to decrease impact. In general, use a set instead of list.
+```
+So I changed it to `SET` and it's completely fine for the context of this project.
