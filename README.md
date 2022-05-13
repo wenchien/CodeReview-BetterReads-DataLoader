@@ -105,3 +105,17 @@ So I changed it to `SET` and it's completely fine for the context of this projec
             }
         }
 ```
+
+## Changes - Changed author id parsing
+Because we're using GSON, we have to parse the authorIds a little differently than what was shown in the video.
+However, if you analyze the data first, then you will realize a simple pattern:
+`1. Author Ids will (most likely) end with the letter 'A'`
+`2. Books (Works) will (most likely) end with the letter 'W'`
+```Java
+String parsedAuthorId = this.getAuthors().toString();
+        String beforeSplit = parsedAuthorId.substring(parsedAuthorId.indexOf("/authors/"), parsedAuthorId.indexOf("A", parsedAuthorId.indexOf("/authors/")) + 1).replaceAll("/authors/", "");
+        log.info(beforeSplit);
+        if (!Strings.isNullOrEmpty(beforeSplit)) {
+            this.getAuthorIds().add(beforeSplit);
+        }
+```
