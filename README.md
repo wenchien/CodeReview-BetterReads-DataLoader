@@ -112,7 +112,7 @@ However, if you analyze the data first, then you will realize a simple pattern:
 - Author Ids will (most likely) end with the letter 'A'
 - Books (Works) will (most likely) end with the letter 'W'
 ```Java
-String parsedAuthorId = this.getAuthors().toString();
+	String parsedAuthorId = this.getAuthors().toString();
         String beforeSplit = parsedAuthorId.substring(parsedAuthorId.indexOf("/authors/"), parsedAuthorId.indexOf("A", parsedAuthorId.indexOf("/authors/")) + 1).replaceAll("/authors/", "");
         log.info(beforeSplit);
         if (!Strings.isNullOrEmpty(beforeSplit)) {
