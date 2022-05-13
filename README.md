@@ -1,7 +1,7 @@
 # CodeReview-BetterReads
 ## Why?
 I was following a pretty interesting code-along series by Java Brains on Youtube `https://youtu.be/LxVGFBRpEFM`. Check it out!
-However, I feel like some things can be modified to abide by the SOLID principle. 
+However, I feel like some things can be modified to be more suitable
 This repository is dedicated to my thoughts on what can be changed and why.
 I will be making continuous modification as I go through the project.
 This is also a documentation for what I've learned.
