@@ -83,10 +83,24 @@ package standards man, package standards
 ## Changes - Added .cql
 For bookkeeping 
 
-## Changes changed CassandraColumn type from `Name.LIST` to `Name.SET`
+## Changes - changed CassandraColumn type from `Name.LIST` to `Name.SET`
 According to [DataStax Documentation](https://docs.datastax.com/en/cql-oss/3.x/cql/cql_reference/cql_data_types_c.html?utm_source=google&utm_medium=search_pd&utm_campaign=dsa-rtg&utm_content=hp&gclid=Cj0KCQjwg_iTBhDrARIsAD3Ib5i67IkuGUmOVcLJECRHrQhar9j2OeY-oawzCa_pPKLrJmOb-hterikaAvknEALw_wcB), the description for LIST is of the following:
 ```
 CAUTION:
 Lists have limitations and specific performance considerations. Use a frozen list to decrease impact. In general, use a set instead of list.
 ```
 So I changed it to `SET` and it's completely fine for the context of this project.
+
+## Changes - Added EncodingUtil class and change how description is processed
+```Java
+// Process description and set post processed result to descriptionStr
+        if (null != this.getDescription()) {
+            for(Map.Entry<String, String> entry : this.getDescription().entrySet()) {
+                if (Strings.isNullOrEmpty(this.getDescriptionStr())) {
+                    this.setDescriptionStr(EncodingUtil.encodeValue(entry.getValue()));
+                } else {
+                    this.setDescriptionStr(this.getDescriptionStr() + " " + EncodingUtil.encodeValue(entry.getValue()));
+                }
+            }
+        }
+```
