@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import io.jdevelop.DTO.Author;
-import io.jdevelop.DTO.Book;
+import io.jdevelop.beans.Author;
+import io.jdevelop.beans.Book;
 import io.jdevelop.gson.classdeserializer.LocalDateDeserializer;
 import io.jdevelop.gson.typeadapters.PostProcessable;
 import io.jdevelop.repository.AuthorRepository;

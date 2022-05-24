@@ -18,8 +18,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Component;
 
-import io.jdevelop.DTO.Author;
-import io.jdevelop.DTO.Book;
+import io.jdevelop.beans.Author;
+import io.jdevelop.beans.Book;
 import io.jdevelop.gson.classdeserializer.LocalDateDeserializer;
 import io.jdevelop.gson.typeadapters.PostProcessable;
 import io.jdevelop.repository.AuthorRepository;
@@ -48,8 +48,8 @@ public class LoadData {
     public void onApplicationReady() {
         // similar to @PostConstruct
 		try {
-			//initAuthors();
-			//Thread.sleep(3000);
+			initAuthors();
+			Thread.sleep(3000);
         	initWorks();
 		} catch(Exception ex) {
 			log.error(ex.getMessage(), ex);
